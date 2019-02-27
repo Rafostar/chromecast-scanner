@@ -1,6 +1,7 @@
 var mdns = require('multicast-dns');
 var find = require('array-find');
 var xtend = require('xtend');
+var dnstxt = require('dns-txt')();
 
 var defaults = {
   ttl: 5000,
@@ -9,38 +10,48 @@ var defaults = {
   mdns: {}
 };
 
-module.exports = function(opts, cb) {
-  if (typeof opts === 'function') {
+module.exports = (opts, cb) => {
+  if(typeof opts === 'function') {
     cb = opts;
     opts = defaults;
   } else {
     opts = xtend(defaults, opts);
   }
 
+  var devices = [];
   var m = mdns(opts.mdns);
-
-  var timer = setTimeout(function() {
+  var timer = setTimeout(() => {
     close();
+    if(devices.length == 0) cb(new Error('device not found'));
+    else cb(null, devices);
   }, opts.ttl);
 
-  var onResponse = function(response) {
+  var onResponse = response => {
     var answer = response.answers[0];
 
-    if (answer &&
+    if(answer &&
         (answer.name !== opts.service_name ||
          answer.type !== opts.service_type)) {
       return;
     }
 
-    var info = find(response.additionals, function(entry) {
+    var resp_a = find(response.additionals, entry => {
       return entry.type === 'A';
     });
 
-    if (!info || (opts.name && info.name !== opts.name)) {
-      return;
-    }
+    var resp_txt = find(response.additionals, entry => {
+      return entry.type === 'TXT';
+    });
 
-    cb(null, info, response);
+    var info = {
+      name: resp_a.name,
+      friendlyName: dnstxt.decode(resp_txt.data).fn,
+      ip: resp_a.data
+    };
+
+    if(!info || (opts.name && info.name !== opts.name)) return;
+
+    devices.push(info);
     return;
   };
 
@@ -53,7 +64,7 @@ module.exports = function(opts, cb) {
     }]
   });
 
-  var close = function() {
+  var close = () => {
     m.removeListener('response', onResponse);
     clearTimeout(timer);
     m.destroy();
