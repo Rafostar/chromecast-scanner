@@ -2,7 +2,7 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TFVDFD88KQ322)
 [![Donate](https://img.shields.io/badge/Donate-PayPal.Me-lightgrey.svg)](https://www.paypal.me/Rafostar)
 
-## Scan your local network for Chromecast devices.
+### Scan your local network for Chromecast devices.
 Based on [xat/chromecast-scanner](https://github.com/xat/chromecast-scanner).
 
 ### Usage
