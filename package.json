@@ -1,24 +1,25 @@
 {
-  "name": "chromecast-scanner",
-  "version": "0.5.1",
-  "description": "scan your local network for chromecast devices and return the first found.",
+  "name": "multicast-scanner",
+  "version": "1.0.0",
+  "description": "Scan your local network for chromecast devices.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xat/chromecast-scanner/"
+    "url": "https://github.com/Rafostar/multicast-scanner"
   },
   "keywords": [
     "chromecast",
     "mdns",
     "scanner"
   ],
-  "author": "Simon Kusterer",
+  "author": "Rafostar",
   "license": "MIT",
   "dependencies": {
     "array-find": "^0.1.1",
+    "dns-txt": "^2.0.2",
     "multicast-dns": "^4.0.0",
     "xtend": "^4.0.0"
   }
