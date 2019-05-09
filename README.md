@@ -9,7 +9,7 @@ Based on [xat/chromecast-scanner](https://github.com/xat/chromecast-scanner).
 ```javascript
 var scanner = require('multicast-scanner');
 
-scanner((err, devices) => {
+scanner({ full_scan: true }, (err, devices) => {
   if(err) return console.log(err.message);
 
   devices.forEach(device => {

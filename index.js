@@ -5,6 +5,7 @@ var dnstxt = require('dns-txt')();
 
 var defaults = {
   ttl: 5000,
+  full_scan: false,
   service_name: '_googlecast._tcp.local',
   service_type: 'PTR',
   mdns: {}
@@ -20,10 +21,14 @@ module.exports = (opts, cb) => {
 
   var devices = [];
   var m = mdns(opts.mdns);
+
   var timer = setTimeout(() => {
     close();
-    if(devices.length == 0) cb(new Error('device not found'));
-    else cb(null, devices);
+    if(!opts.full_scan || devices.length == 0) {
+      cb(new Error('device not found'));
+    } else if(opts.full_scan) {
+      cb(null, devices);
+    }
   }, opts.ttl);
 
   var onResponse = response => {
@@ -51,8 +56,11 @@ module.exports = (opts, cb) => {
 
     if(!info || (opts.name && info.name !== opts.name)) return;
 
-    devices.push(info);
-    return;
+    if(opts.full_scan) devices.push(info);
+    else {
+      cb(null, info, response);
+      close();
+    }
   };
 
   m.on('response', onResponse);
