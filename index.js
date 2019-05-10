@@ -48,13 +48,15 @@ module.exports = (opts, cb) => {
       return entry.type === 'TXT';
     });
 
+    if(!resp_a || !resp_txt || (opts.name && resp_a.name !== opts.name)) {
+      return;
+    }
+
     var info = {
       name: resp_a.name,
       friendlyName: dnstxt.decode(resp_txt.data).fn,
       ip: resp_a.data
     };
-
-    if(!info || (opts.name && info.name !== opts.name)) return;
 
     if(opts.full_scan) devices.push(info);
     else {
