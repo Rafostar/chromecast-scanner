@@ -1,6 +1,4 @@
 var mdns = require('multicast-dns');
-var find = require('array-find');
-var xtend = require('xtend');
 var dnstxt = require('dns-txt')();
 
 var defaults = {
@@ -16,7 +14,7 @@ module.exports = (opts, cb) => {
     cb = opts;
     opts = defaults;
   } else {
-    opts = xtend(defaults, opts);
+    opts = {...defaults, ...opts};
   }
 
   var devices = [];
@@ -40,11 +38,11 @@ module.exports = (opts, cb) => {
       return;
     }
 
-    var resp_a = find(response.additionals, entry => {
+    var resp_a = response.additionals.find(entry => {
       return entry.type === 'A';
     });
 
-    var resp_txt = find(response.additionals, entry => {
+    var resp_txt = response.additionals.find(entry => {
       return entry.type === 'TXT';
     });
 

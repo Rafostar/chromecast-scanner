@@ -18,9 +18,7 @@
   "author": "Rafostar",
   "license": "MIT",
   "dependencies": {
-    "array-find": "^1.0.0",
     "dns-txt": "^2.0.2",
-    "multicast-dns": "6.2.3",
-    "xtend": "^4.0.1"
+    "multicast-dns": "6.2.3"
   }
 }
