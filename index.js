@@ -61,8 +61,8 @@ module.exports = (opts, cb) => {
         devices.push(info);
       }
     } else {
-      cb(null, info, response);
       close();
+      cb(null, info, response);
     }
   };
 
