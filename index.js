@@ -22,7 +22,7 @@ module.exports = (opts, cb) => {
 
   var timer = setTimeout(() => {
     close();
-    if(!opts.full_scan || devices.length == 0) {
+    if(!opts.full_scan || devices.length === 0) {
       cb(new Error('device not found'));
     } else if(opts.full_scan) {
       cb(null, devices);
@@ -56,8 +56,11 @@ module.exports = (opts, cb) => {
       ip: resp_a.data
     };
 
-    if(opts.full_scan) devices.push(info);
-    else {
+    if(opts.full_scan) {
+      if(devices.length === 0 || !devices.some(device => device.ip === info.ip)) {
+        devices.push(info);
+      }
+    } else {
       cb(null, info, response);
       close();
     }
