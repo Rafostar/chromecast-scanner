@@ -2,7 +2,7 @@ var mdns = require('multicast-dns');
 var dnstxt = require('dns-txt')();
 
 var defaults = {
-  ttl: 5000,
+  ttl: 7000,
   full_scan: false,
   service_name: '_googlecast._tcp.local',
   service_type: 'PTR',
@@ -68,15 +68,21 @@ module.exports = (opts, cb) => {
 
   m.on('response', onResponse);
 
-  m.query({
-    questions:[{
-      name: opts.service_name,
-      type: opts.service_type
-    }]
-  });
+  var scanQuery = () => {
+    m.query({
+      questions:[{
+        name: opts.service_name,
+        type: opts.service_type
+      }]
+    });
+  };
+
+  scanQuery();
+  var interval = setInterval(() => scanQuery(), 2500);
 
   var close = () => {
     m.removeListener('response', onResponse);
+    clearInterval(interval);
     clearTimeout(timer);
     m.destroy();
   };
