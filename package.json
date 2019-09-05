@@ -18,7 +18,6 @@
   "author": "Rafostar",
   "license": "MIT",
   "dependencies": {
-    "dns-txt": "^2.0.2",
-    "multicast-dns": "6.2.3"
+    "multicast-dns": "^7.2.0"
   }
 }
