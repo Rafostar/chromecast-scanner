@@ -1,6 +1,6 @@
 {
   "name": "multicast-scanner",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Scan your local network for chromecast devices.",
   "main": "index.js",
   "scripts": {
