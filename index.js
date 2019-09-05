@@ -1,5 +1,4 @@
 var mdns = require('multicast-dns');
-var dnstxt = require('dns-txt')();
 
 var defaults = {
   ttl: 7000,
@@ -50,11 +49,24 @@ module.exports = (opts, cb) => {
       return;
     }
 
+    var getFriendlyName = () => {
+      var fn = String(resp_txt.data.find(item => String(item).startsWith('fn')));
+      if(!fn) return null;
+      else if(fn.startsWith('fn=')) {
+        fn = fn.split('fn=')[1];
+      }
+      return fn;
+    };
+
     var info = {
       name: resp_a.name,
-      friendlyName: dnstxt.decode(resp_txt.data).fn,
+      friendlyName: getFriendlyName(),
       ip: resp_a.data
     };
+
+    if(!info.friendlyName) {
+      return;
+    }
 
     if(opts.full_scan) {
       if(devices.length === 0 || !devices.some(device => device.ip === info.ip)) {
