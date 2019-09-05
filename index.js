@@ -50,12 +50,12 @@ module.exports = (opts, cb) => {
     }
 
     var getFriendlyName = () => {
-      var fn = String(resp_txt.data.find(item => String(item).startsWith('fn')));
-      if(!fn) return null;
-      else if(fn.startsWith('fn=')) {
-        fn = fn.split('fn=')[1];
+      var fn = resp_txt.data.find(item => String(item).startsWith('fn='));
+      if(fn) {
+        fn = String(fn).split('fn=')[1];
+        return fn;
       }
-      return fn;
+      return null;
     };
 
     var info = {
