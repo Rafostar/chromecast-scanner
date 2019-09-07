@@ -1,7 +1,7 @@
 {
   "name": "multicast-scanner",
   "version": "2.1.1",
-  "description": "Scan your local network for chromecast devices.",
+  "description": "Scan your local network for mDNS devices.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
