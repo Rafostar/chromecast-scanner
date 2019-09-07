@@ -2,6 +2,7 @@ var mdns = require('multicast-dns');
 
 var defaults = {
   ttl: 7000,
+  interval: 2500,
   full_scan: false,
   service_name: '_googlecast._tcp.local',
   service_type: 'PTR',
@@ -90,7 +91,7 @@ module.exports = (opts, cb) => {
   };
 
   scanQuery();
-  var interval = setInterval(() => scanQuery(), 2500);
+  var interval = setInterval(() => scanQuery(), opts.interval);
 
   var close = () => {
     m.removeListener('response', onResponse);
