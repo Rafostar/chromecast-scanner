@@ -1,6 +1,6 @@
 var mdns = require('multicast-dns');
 
-var defaults = {
+const defaults = {
   ttl: 7000,
   interval: 2500,
   full_scan: false,
@@ -65,7 +65,7 @@ module.exports = (opts, cb) => {
       ip: resp_a.data
     };
 
-    if(!info.friendlyName) {
+    if(opts.service_name === defaults.service_name && !info.friendlyName) {
       return;
     }
 
