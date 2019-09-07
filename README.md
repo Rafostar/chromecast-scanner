@@ -13,6 +13,7 @@ Defaults:
   ttl: 7000,
   interval: 2500,
   full_scan: false,
+  name: null,
   service_name: '_googlecast._tcp.local',
   service_type: 'PTR',
   mdns: {}
