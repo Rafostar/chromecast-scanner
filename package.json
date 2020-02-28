@@ -1,6 +1,6 @@
 {
   "name": "multicast-scanner",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Scan your local network for mDNS devices.",
   "main": "index.js",
   "scripts": {
