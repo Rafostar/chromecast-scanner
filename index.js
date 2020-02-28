@@ -5,6 +5,7 @@ const defaults = {
   interval: 2500,
   full_scan: false,
   name: null,
+  friendly_name: null,
   service_name: '_googlecast._tcp.local',
   service_type: 'PTR',
   mdns: {}
@@ -68,6 +69,12 @@ module.exports = (opts, cb) => {
 
     if(opts.service_name === defaults.service_name && !info.friendlyName) {
       return;
+    }
+
+    if(opts.friendly_name) {
+      if(!info.friendlyName || opts.friendly_name !== info.friendlyName) {
+        return;
+      }
     }
 
     if(opts.full_scan) {

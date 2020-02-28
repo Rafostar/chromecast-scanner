@@ -14,6 +14,7 @@ Defaults:
   interval: 2500,
   full_scan: false,
   name: null,
+  friendly_name: null,
   service_name: '_googlecast._tcp.local',
   service_type: 'PTR',
   mdns: {}
