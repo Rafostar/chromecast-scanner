@@ -64,7 +64,8 @@ module.exports = (opts, cb) => {
     var info = {
       name: resp_a.name,
       friendlyName: getFriendlyName(),
-      ip: resp_a.data
+      ip: resp_a.data,
+      port: null
     };
 
     if(opts.service_name === defaults.service_name && !info.friendlyName) {
@@ -75,6 +76,14 @@ module.exports = (opts, cb) => {
       if(!info.friendlyName || opts.friendly_name !== info.friendlyName) {
         return;
       }
+    }
+
+    var resp_srv = response.additionals.find(entry => {
+      return entry.type === 'SRV';
+    });
+
+    if(resp_srv && resp_srv.data && resp_srv.data.port) {
+      info.port = resp_srv.data.port;
     }
 
     if(opts.full_scan) {

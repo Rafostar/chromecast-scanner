@@ -40,7 +40,8 @@ scanner({ full_scan: true }, (err, devices) => {
 /* Example Output:
 { name: 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.local',
   friendlyName: 'My Chromecast',
-  ip: '192.168.1.XXX' }
+  ip: '192.168.1.XXX',
+  port: 8009 }
 */
 ```
 
