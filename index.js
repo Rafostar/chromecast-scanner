@@ -22,14 +22,17 @@ module.exports = (opts, cb) => {
   var devices = [];
   var m = mdns(opts.mdns);
 
-  var timer = setTimeout(() => {
-    close();
-    if(!opts.full_scan || devices.length === 0) {
-      cb(new Error('device not found'));
-    } else if(opts.full_scan) {
-      cb(null, devices);
-    }
-  }, opts.ttl);
+  var timer = (isNaN(opts.ttl) || opts.ttl <= 0)
+  ? null
+  : setTimeout(() => {
+      timer = null;
+      close();
+      if(!opts.full_scan || devices.length === 0) {
+        cb(new Error('device not found'));
+      } else if(opts.full_scan) {
+        cb(null, devices);
+      }
+    }, opts.ttl);
 
   var onResponse = response => {
     var answer = response.answers[0];
@@ -113,7 +116,9 @@ module.exports = (opts, cb) => {
   var close = () => {
     m.removeListener('response', onResponse);
     clearInterval(interval);
-    clearTimeout(timer);
+    if(timer) {
+      clearTimeout(timer);
+    }
     m.destroy();
   };
 
