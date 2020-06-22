@@ -34,6 +34,15 @@ module.exports = (opts, cb) => {
       }
     }, opts.ttl);
 
+  var getIsDuplicate = (info) => {
+    devices.some(device => {
+      if(device.port && info.port) {
+        return device.ip === info.ip && device.port === info.port
+      }
+      return device.ip === info.ip;
+    });
+  };
+
   var onResponse = response => {
     var answer = response.answers[0];
 
@@ -90,7 +99,7 @@ module.exports = (opts, cb) => {
     }
 
     if(opts.full_scan) {
-      if(devices.length === 0 || !devices.some(device => device.ip === info.ip)) {
+      if(devices.length === 0 || !getIsDuplicate(info)) {
         devices.push(info);
       }
     } else {
