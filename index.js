@@ -35,9 +35,9 @@ module.exports = (opts, cb) => {
     }, opts.ttl);
 
   var getIsDuplicate = (info) => {
-    devices.some(device => {
+    return devices.some(device => {
       if(device.port && info.port) {
-        return device.ip === info.ip && device.port === info.port
+        return (device.ip === info.ip && device.port === info.port);
       }
       return device.ip === info.ip;
     });
